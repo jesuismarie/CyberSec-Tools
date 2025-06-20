@@ -2,6 +2,18 @@ import requests
 import sys
 from urllib.parse import urljoin
 
+def is_host_reachable(url):
+	try:
+		test_response = requests.get(url, timeout=5)
+		print(f"[✓] Server reachable:\t\t{url} (Status: {test_response.status_code})")
+	except KeyboardInterrupt:
+			print("\nScan interrupted by user.")
+			sys.exit()
+	except requests.RequestException:
+		print(f"[✗] Server not reachable:\t{url}")
+		print("===============================================================")
+		sys.exit(1)
+
 def dir_enumeration(url, wordlist_path):
 	try:
 		with open(wordlist_path, 'r') as file:
@@ -16,15 +28,7 @@ def dir_enumeration(url, wordlist_path):
 	print("===============================================================")
 	print(f"[+] Url:\t\t\thttp://{url}")
 	print(f"[+] Wordlist:\t\t\t{wordlist_path}")
-
-	try:
-		test_response = requests.get(url, timeout=5)
-		print(f"[✓] Server reachable:\t\t{url} (Status: {test_response.status_code})")
-	except requests.RequestException:
-		print(f"[✗] Server not reachable:\t{url}")
-		print("===============================================================")
-		sys.exit(1)
-
+	is_host_reachable(url)
 	print("===============================================================")
 	print("Starting directory enumeration...")
 	print("===============================================================")
@@ -40,6 +44,9 @@ def dir_enumeration(url, wordlist_path):
 			elif response.status_code == 403:
 				print(f"[-] Forbidden (403): {test_url}")
 				found = True
+		except KeyboardInterrupt:
+			print("\nScan interrupted by user.")
+			sys.exit()
 		except requests.RequestException:
 			continue
 
