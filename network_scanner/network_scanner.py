@@ -51,8 +51,8 @@ def network_scanner(ip):
 	print("Scan complete.")
 
 if __name__ == "__main__":
-	if len(sys.argv) != 3:
-		print("Usage: python3 network_scanner.py -p- <ip>")
+	if len(sys.argv) != 2:
+		print("Usage: python3 network_scanner.py <ip>")
 	else:
-		ip = sys.argv[2]
+		ip = sys.argv[1]
 		network_scanner(ip)
