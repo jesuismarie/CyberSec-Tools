@@ -48,7 +48,7 @@ def dir_enumeration(url, wordlist_path):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
-		print("Usage: python3 directory_enumeration.py <url> <wordlist>")
+		print("Usage: python directory_enumeration.py <url> <wordlist>")
 	else:
 		url = sys.argv[1]
 		wordlist_path = sys.argv[2]
