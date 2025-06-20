@@ -4,13 +4,11 @@ from urllib.parse import urljoin
 
 def dir_enumeration(url, wordlist_path):
 	try:
-		file = open(wordlist_path, 'r')
+		with open(wordlist_path, 'r') as file:
+			word_lst = [line.strip() for line in file if line.strip()]
 	except Exception:
 		print(f"Wordlist {wordlist_path} not found")
 		sys.exit(1)
-
-	word_lst = file.readlines()
-	file.close()
 
 	if not url.startswith('http'):
 		url = 'http://' + url
@@ -30,16 +28,23 @@ def dir_enumeration(url, wordlist_path):
 	print("===============================================================")
 	print("Starting directory enumeration...")
 	print("===============================================================")
+
+	found = False
 	for word in word_lst:
-		test_url = urljoin(url.rstrip('/') + '/', word.strip())
+		test_url = urljoin(url.rstrip('/') + '/', word)
 		try:
 			response = requests.get(test_url, timeout=5)
 			if response.status_code == 200:
 				print(f"[+] Found: {test_url} (200 OK)")
+				found = True
 			elif response.status_code == 403:
 				print(f"[-] Forbidden (403): {test_url}")
+				found = True
 		except requests.RequestException:
 			continue
+
+	if not found:
+		print("[-] No directories found.")
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
