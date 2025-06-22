@@ -7,7 +7,7 @@ Whether you're learning cybersecurity or building a personal toolkit, this repo 
 ## Table of Content
 
 - [🔍 Network Scanner](#-1-network-scanner)
-- [📁 Diercory Enumeration](#-2-directory-enumerator)
+- [📁 Directory Enumeration](#-2-directory-enumerator)
 - [🌐 Subdomain Discovery](#-3-subdomain-discovery)
 - [🔐 SSH Brute Forcer](#-4-ssh-brute-forcer)
 - [🧾 Hash Identifier](#-5-hash-identifier)
@@ -211,3 +211,76 @@ Starting subdomain discovery...
 * `dnspython` library
 
 > ⚠️ Ensure the wordlist contains one subdomain prefix per line (e.g., `admin`, `mail`, `test`). Do not include full domain names in the wordlist.
+
+---
+
+Here's the complete and consistent `README` for your **SSH Brute Forcer** tool, following the same style as the previous tools:
+
+---
+
+## 🔐 4. SSH Brute Forcer
+
+### 📄 Description
+
+Attempts to brute-force SSH login using a list of usernames and passwords. Intended for controlled environments such as CTFs or lab testing.
+
+### 📌 Features
+
+* Checks if the SSH service is reachable on the target
+* Attempts to log in using a wordlist of passwords
+* Displays successful login credentials (if found)
+* Handles connection timeouts and interruptions gracefully
+
+### 📦 Installation
+
+Set up a virtual environment and install dependencies from `requirements.txt`:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 🚀 Usage
+
+```bash
+python3 ssh_brute_force.py <target> <username> <passlist>
+```
+
+#### Example:
+
+```bash
+python3 ssh_brute_force.py 192.168.1.10 root passwords.txt
+```
+
+#### Output:
+
+```
+===============================================================
+[+] Target:		192.168.1.10
+[+] Username:		root
+[+] Wordlist:		passwords.txt
+[✔] Target 192.168.1.10:22 is reachable.
+===============================================================
+Starting SSH brute-force...
+===============================================================
+[~] Trying: root:123456
+[~] Trying: root:toor
+[~] Trying: root:letmein
+...
+===============================================================
+[✔] Success! Username: root | Password: toor
+===============================================================
+```
+
+### ⚙️ How It Works
+
+* Verifies the SSH port (default `22`) is open using `socket.create_connection()`.
+* Reads passwords from a wordlist file.
+* Uses `paramiko` to attempt SSH login with each password.
+* Stops upon successful login, or reports failure if no credentials work.
+
+### 📦 Requirements
+
+* Python 3.x
+* `paramiko` library
