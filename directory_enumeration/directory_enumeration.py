@@ -14,14 +14,17 @@ def is_host_reachable(url):
 		print("===============================================================")
 		sys.exit(1)
 
-def dir_enumeration(url, wordlist_path):
+def parse_wordlst(wordlist_path):
 	try:
 		with open(wordlist_path, 'r') as file:
 			word_lst = [line.strip() for line in file if line.strip()]
+			return word_lst
 	except Exception:
 		print(f"Wordlist {wordlist_path} not found")
 		sys.exit(1)
 
+def dir_enumeration(url, wordlist_path):
+	word_lst = parse_wordlst(wordlist_path)
 	if not url.startswith('http'):
 		url = 'http://' + url
 
@@ -48,7 +51,7 @@ def dir_enumeration(url, wordlist_path):
 			print("\nScan interrupted by user.")
 			sys.exit()
 		except requests.RequestException:
-			continue
+			pass
 
 	if not found:
 		print("[-] No directories found.")

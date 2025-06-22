@@ -43,7 +43,7 @@ def network_scanner(ip):
 			print("\nScan interrupted by user.")
 			sys.exit()
 		except Exception:
-			continue
+			pass
 
 	if not found:
 		print("No ports found.")
@@ -52,7 +52,7 @@ def network_scanner(ip):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		print("Usage: python3 network_scanner.py <ip>")
+		print("Usage: python network_scanner.py <ip-address>")
 	else:
 		ip = sys.argv[1]
 		network_scanner(ip)
