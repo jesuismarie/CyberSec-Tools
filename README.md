@@ -4,9 +4,23 @@ A curated collection of offensive security tools written, developed for learning
 
 Whether you're learning cybersecurity or building a personal toolkit, this repo provides practical, hands-on utilities to explore network scanning, brute-force attacks, enumeration, and more.
 
+## Table of Content
+
+- [🔍 Network Scanner](#-1-network-scanner)
+- [📁 Diercory Enumeration](#-2-directory-enumerator)
+- [🌐 Subdomain Discovery](#-3-subdomain-discovery)
+- [🔐 SSH Brute Forcer](#-4-ssh-brute-forcer)
+- [🧾 Hash Identifier](#-5-hash-identifier)
+- [🧨 Hash Cracker](#-6-hash-cracker)
+- [📊 Log Analyzer](#-7-log-analyzer)
+- [🎣 Email Phishing Detector](#-8-email-phishing-detector)
+- [💣 Custom Metasploit Module](#-9-custom-metasploit-module)
+
 ---
 
 ## 🔍 1. Network Scanner
+
+### 📄 Description
 
 Scans a target IP for open TCP ports and attempts to identify the services running on them. Useful for basic reconnaissance and enumeration during penetration testing.
 
@@ -23,13 +37,13 @@ Scans a target IP for open TCP ports and attempts to identify the services runni
 ### 🚀 Usage
 
 ```bash
-python3 network_scanner.py <ip-address>
+python network_scanner.py <ip-address>
 ```
 
 #### Example:
 
 ```bash
-python3 network_scanner.py 192.168.1.1
+python network_scanner.py 192.168.1.1
 ```
 
 #### Output:
@@ -66,6 +80,8 @@ Scan complete.
 
 ## 📁 2. Directory Enumerator
 
+### 📄 Description
+
 Performs brute-force directory and file discovery on a given web server using a user-provided wordlist. Helps identify hidden or restricted paths that may expose sensitive content during a web application penetration test.
 
 ### 📌 Features
@@ -80,7 +96,7 @@ Performs brute-force directory and file discovery on a given web server using a 
 Use a virtual environment and install dependencies from `requirements.txt`:
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -126,6 +142,72 @@ Starting directory enumeration...
 ### 📦 Requirements
 
 * Python 3.x
-* [`requests`](https://pypi.org/project/requests/)
+* `requests` library
 
 > ⚠️ Ensure the wordlist file exists and is properly formatted (one path per line).
+
+---
+
+## 🌐 3. Subdomain Discovery
+
+### 📄 Description
+
+Performs subdomain brute-forcing for a given domain using a custom wordlist. Helps uncover hidden or unlisted subdomains during the reconnaissance phase of web application penetration testing.
+
+### 📌 Features
+
+* Validates if the base domain is reachable
+* Uses DNS resolution to identify live subdomains
+* Supports custom wordlists for flexible enumeration
+* Clean, informative CLI output
+
+### 📦 Installation
+
+Use a virtual environment and install dependencies from `requirements.txt`:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 🚀 Usage
+
+```bash
+python subdomain_discovery.py <domain> <wordlist>
+```
+
+#### Example:
+
+```bash
+python subdomain_discovery.py example.com subdomains.txt
+```
+
+#### Output:
+
+```
+===============================================================
+[+] Domain:      example.com
+[+] Wordlist:    subdomains.txt
+===============================================================
+Starting subdomain discovery...
+===============================================================
+[+] Found: admin.example.com
+[+] Found: dev.example.com
+...
+[-] No subdomains found.
+```
+
+### ⚙️ How It Works
+
+* Loads a list of potential subdomain prefixes from the wordlist.
+* Appends each prefix to the base domain (e.g., `admin.example.com`).
+* Uses `dns.resolver` to check for valid DNS A records.
+* If the subdomain resolves, it is considered "found".
+
+### 📦 Requirements
+
+* Python 3.x
+* `dnspython` library
+
+> ⚠️ Ensure the wordlist contains one subdomain prefix per line (e.g., `admin`, `mail`, `test`). Do not include full domain names in the wordlist.
