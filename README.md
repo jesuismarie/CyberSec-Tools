@@ -13,8 +13,8 @@ Whether you're learning cybersecurity or building a personal toolkit, this repo 
 - [🧾 Hash Identifier](#-5-hash-identifier)
 - [🧨 Hash Cracker](#-6-hash-cracker)
 - [📊 Log Analyzer](#-7-log-analyzer)
-- [🎣 Email Phishing Detector](#-8-email-phishing-detector)
-- [💣 Custom Metasploit Module](#-9-custom-metasploit-module)
+<!-- - [🎣 Email Phishing Detector](#-8-email-phishing-detector)
+- [💣 Custom Metasploit Module](#-9-custom-metasploit-module) -->
 
 ---
 
@@ -284,3 +284,218 @@ Starting SSH brute-force...
 
 * Python 3.x
 * `paramiko` library
+
+---
+
+## 🧾 5. Hash Identifier
+
+### 📄 Description
+
+A simple and effective script for identifying the most likely hash type based on known lengths and patterns.
+
+### 📌 Features
+
+* Matches input against known hash formats (MD5, SHA, bcrypt, NTLM, LM, etc.)
+* Detects special cases like `MySQL5`, `bcrypt`, and `Base64`
+* Supports hex-encoded and Base64-style hashes
+* Validates input format and alerts on invalid values
+
+### 🚀 Usage
+
+```bash
+python3 hash_identifier.py <hash>
+```
+
+#### Example:
+
+```bash
+python3 hash_identifier.py 5f4dcc3b5aa765d61d8327deb882cf99
+```
+
+#### Output:
+
+```
+[✓] Possible hash type(s): MD5, NTLM, MD4, LM
+```
+
+### ⚙️ How It Works
+
+* Uses regex patterns to match the hash string against common hash types.
+* Supports case-insensitive hex and Base64 formats.
+* Handles:
+
+  * Fixed-length patterns (e.g., 32 for MD5)
+  * Prefix-based identifiers (e.g., `$2a$` for bcrypt)
+* Includes fallback detection for certain LM second-half hash values.
+
+### 📦 Requirements
+
+* Python 3.x
+
+> ⚠️ Hash type identification is **heuristic-based** and not guaranteed to be 100% accurate — some hash types share formats. Use this as a first step before cracking or reverse engineering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## 🧨 6. Hash Cracker
+
+Tries to crack a given hash using a wordlist (dictionary attack). Supports common hash algorithms such as MD5, SHA1, and SHA256.
+
+> **Key Features**: Fast cracking with known wordlists, extensible to other hashes.
+
+---
+
+## 📊 7. Log Analyzer
+
+Parses and analyzes server log files to extract valuable insights such as IPs, user agents, and status codes. Useful for identifying suspicious activity or failed attacks.
+
+> **Key Features**: Regex-based parsing, summary statistics, customizable filters.
+
+---
+
+## 🎣 8. Email Phishing Detector
+
+Analyzes the content and structure of email messages to detect potential phishing indicators (e.g., spoofed headers, suspicious links, deceptive language).
+
+> **Key Features**: Heuristic checks, URL inspection, basic header validation.
+
+---
+
+## 💣 9. Custom Metasploit Module
+
+A custom (demo) Metasploit module for demonstration or learning purposes. Doesn't perform a real exploit but can be loaded into Metasploit and used via:
+
+```bash
+use /custom/david/bruter
+```
+
+> **Key Features**: Learn how to build and integrate Metasploit modules, structure mimicry.
+
+
+
+
+
+
+
+
+
+
+
+
+## 🧨 6. Hash Cracker (Python)
+
+### 📄 Description
+
+Attempts to crack a hash using a dictionary attack with a wordlist.
+
+### 🚀 Usage
+
+```bash
+python hash_cracker.py <hash> <wordlist>
+```
+
+### ⚙️ How It Works
+
+* Hashes each word from the wordlist using the target algorithm.
+* Compares each against the provided hash.
+* Stops if a match is found.
+
+### 📦 Requirements
+
+* Python 3.x
+
+---
+
+## 📊 7. Log Analyzer (Python)
+
+### 📄 Description
+
+Parses web server logs (e.g., Apache/Nginx) to extract useful insights like top IPs, error codes, and user agents. Useful for blue team or post-exploitation.
+
+### 🚀 Usage
+
+```bash
+python log_analyzer.py access.log
+```
+
+### ⚙️ How It Works
+
+* Reads log lines and extracts fields using regex.
+* Groups and summarizes key metrics (e.g., top 10 IPs, 404 paths, etc.).
+
+### 📦 Requirements
+
+* Python 3.x
+* `re`, `collections` modules (standard)
+
+---
+
+## 🎣 8. Email Phishing Detector (Python) – *Bonus Tool*
+
+### 📄 Description
+
+Analyzes the content and headers of an email file to detect possible phishing attacks. A simple heuristic-based email filter.
+
+### 🚀 Usage
+
+```bash
+python phishing_detector.py suspicious_email.eml
+```
+
+### ⚙️ How It Works
+
+* Parses email headers and body.
+* Flags suspicious links, sender spoofing, and common phishing phrases.
+* Prints a report with findings.
+
+### 📦 Requirements
+
+* Python 3.x
+* `email`, `re`, `bs4` (optional)
+
+---
+
+## 💣 9. Custom Metasploit Module (Ruby) – *Bonus Tool*
+
+### 📄 Description
+
+A dummy/custom Metasploit module used to understand Metasploit internals or create templates for future real modules.
+
+### 🚀 Usage in Metasploit
+
+```bash
+msfconsole
+use /custom/david/bruter
+set RHOST <target-ip>
+set RPORT <port>
+run
+```
+
+### ⚙️ How It Works
+
+* Follows standard Metasploit module syntax.
+* Can be extended to include real exploits or auxiliary actions.
+* Loaded from the local module path.
+
+### 📦 Requirements
+
+* Ruby
+* Metasploit Framework
