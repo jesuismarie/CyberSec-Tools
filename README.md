@@ -236,7 +236,7 @@ Attempts to brute-force SSH login using a list of usernames and passwords. Inten
 Set up a virtual environment and install dependencies from `requirements.txt`:
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -244,13 +244,13 @@ pip install -r requirements.txt
 ### 🚀 Usage
 
 ```bash
-python3 ssh_brute_force.py <target> <username> <passlist>
+python ssh_brute_force.py <target> <username> <passlist>
 ```
 
 #### Example:
 
 ```bash
-python3 ssh_brute_force.py 192.168.1.10 root passwords.txt
+python ssh_brute_force.py 192.168.1.10 root passwords.txt
 ```
 
 #### Output:
@@ -303,13 +303,13 @@ A simple and effective script for identifying the most likely hash type based on
 ### 🚀 Usage
 
 ```bash
-python3 hash_identifier.py <hash>
+python hash_identifier.py <hash>
 ```
 
 #### Example:
 
 ```bash
-python3 hash_identifier.py 5f4dcc3b5aa765d61d8327deb882cf99
+python hash_identifier.py 5f4dcc3b5aa765d61d8327deb882cf99
 ```
 
 #### Output:
@@ -334,168 +334,52 @@ python3 hash_identifier.py 5f4dcc3b5aa765d61d8327deb882cf99
 
 > ⚠️ Hash type identification is **heuristic-based** and not guaranteed to be 100% accurate — some hash types share formats. Use this as a first step before cracking or reverse engineering.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 
 ## 🧨 6. Hash Cracker
 
-Tries to crack a given hash using a wordlist (dictionary attack). Supports common hash algorithms such as MD5, SHA1, and SHA256.
-
-> **Key Features**: Fast cracking with known wordlists, extensible to other hashes.
-
----
-
-## 📊 7. Log Analyzer
-
-Parses and analyzes server log files to extract valuable insights such as IPs, user agents, and status codes. Useful for identifying suspicious activity or failed attacks.
-
-> **Key Features**: Regex-based parsing, summary statistics, customizable filters.
-
----
-
-## 🎣 8. Email Phishing Detector
-
-Analyzes the content and structure of email messages to detect potential phishing indicators (e.g., spoofed headers, suspicious links, deceptive language).
-
-> **Key Features**: Heuristic checks, URL inspection, basic header validation.
-
----
-
-## 💣 9. Custom Metasploit Module
-
-A custom (demo) Metasploit module for demonstration or learning purposes. Doesn't perform a real exploit but can be loaded into Metasploit and used via:
-
-```bash
-use /custom/david/bruter
-```
-
-> **Key Features**: Learn how to build and integrate Metasploit modules, structure mimicry.
-
-
-
-
-
-
-
-
-
-
-
-
-## 🧨 6. Hash Cracker (Python)
-
 ### 📄 Description
 
-Attempts to crack a hash using a dictionary attack with a wordlist.
+A dictionary-based hash cracker that attempts to crack a given hash using a specified hashing algorithm and a wordlist.
+
+### 📌 Features
+
+* Supports any algorithm available in Python's `hashlib` (e.g., MD5, SHA1, SHA256)
+* Reads custom wordlists (one password per line)
+* Clean CLI output and graceful handling of errors and interruptions
+* Works offline — no external services required
 
 ### 🚀 Usage
 
 ```bash
-python hash_cracker.py <hash> <wordlist>
+python hash_cracker.py <hash> <algorithm> <passlist>
+```
+
+#### Example:
+
+```bash
+python hash_cracker.py 5f4dcc3b5aa765d61d8327deb882cf99 md5 rockyou.txt
+```
+
+#### Output:
+
+```
+===============================================================
+[~] Hash:        5f4dcc3b5aa765d61d8327deb882cf99
+[~] Algorithm:   md5
+[~] Passlist:    rockyou.txt
+===============================================================
+[✓] Hash cracked! password
+===============================================================
 ```
 
 ### ⚙️ How It Works
 
-* Hashes each word from the wordlist using the target algorithm.
-* Compares each against the provided hash.
-* Stops if a match is found.
+* Loads the wordlist and iterates over each password candidate.
+* Hashes each word using the specified algorithm via `hashlib`.
+* Compares the result against the target hash.
+* Stops and reports the password if a match is found.
 
 ### 📦 Requirements
 
 * Python 3.x
-
----
-
-## 📊 7. Log Analyzer (Python)
-
-### 📄 Description
-
-Parses web server logs (e.g., Apache/Nginx) to extract useful insights like top IPs, error codes, and user agents. Useful for blue team or post-exploitation.
-
-### 🚀 Usage
-
-```bash
-python log_analyzer.py access.log
-```
-
-### ⚙️ How It Works
-
-* Reads log lines and extracts fields using regex.
-* Groups and summarizes key metrics (e.g., top 10 IPs, 404 paths, etc.).
-
-### 📦 Requirements
-
-* Python 3.x
-* `re`, `collections` modules (standard)
-
----
-
-## 🎣 8. Email Phishing Detector (Python) – *Bonus Tool*
-
-### 📄 Description
-
-Analyzes the content and headers of an email file to detect possible phishing attacks. A simple heuristic-based email filter.
-
-### 🚀 Usage
-
-```bash
-python phishing_detector.py suspicious_email.eml
-```
-
-### ⚙️ How It Works
-
-* Parses email headers and body.
-* Flags suspicious links, sender spoofing, and common phishing phrases.
-* Prints a report with findings.
-
-### 📦 Requirements
-
-* Python 3.x
-* `email`, `re`, `bs4` (optional)
-
----
-
-## 💣 9. Custom Metasploit Module (Ruby) – *Bonus Tool*
-
-### 📄 Description
-
-A dummy/custom Metasploit module used to understand Metasploit internals or create templates for future real modules.
-
-### 🚀 Usage in Metasploit
-
-```bash
-msfconsole
-use /custom/david/bruter
-set RHOST <target-ip>
-set RPORT <port>
-run
-```
-
-### ⚙️ How It Works
-
-* Follows standard Metasploit module syntax.
-* Can be extended to include real exploits or auxiliary actions.
-* Loaded from the local module path.
-
-### 📦 Requirements
-
-* Ruby
-* Metasploit Framework
