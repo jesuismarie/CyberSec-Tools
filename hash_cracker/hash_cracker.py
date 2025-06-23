@@ -5,9 +5,6 @@ def parse_wordlist(passlst_path):
 	try:
 		with open(passlst_path, 'r', encoding='utf-8', errors='ignore') as f:
 			return [line.strip() for line in f if line.strip()]
-	except KeyboardInterrupt:
-		print("\nScan interrupted by user.")
-		sys.exit(1)
 	except FileNotFoundError:
 		print(f"[✗] Wordlist file not found: {passlst_path}")
 		print("===============================================================")

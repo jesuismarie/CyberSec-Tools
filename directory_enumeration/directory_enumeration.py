@@ -7,8 +7,8 @@ def is_host_reachable(url):
 		test_response = requests.get(url, timeout=5)
 		print(f"[✓] Server reachable:\t\t{url} (Status: {test_response.status_code})")
 	except KeyboardInterrupt:
-			print("\nScan interrupted by user.")
-			sys.exit()
+		print("\nScan interrupted by user.")
+		sys.exit()
 	except requests.RequestException:
 		print(f"[✗] Server not reachable:\t{url}")
 		print("===============================================================")
