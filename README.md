@@ -383,3 +383,77 @@ python hash_cracker.py 5f4dcc3b5aa765d61d8327deb882cf99 md5 rockyou.txt
 ### 📦 Requirements
 
 * Python 3.x
+
+---
+
+## 📊 7. Log Analyzer
+
+### 📄 Description
+
+Parses and analyzes server log files. It extracts key information from log files to provide insights into client activity, requested resources, and HTTP status codes.
+
+### 📌 Features
+
+* Parses common access log formats using regular expressions
+* Identifies top IPs, most requested URLs, and status code distributions
+* Outputs clean summary statistics to the terminal
+* Handles malformed lines and empty files gracefully
+
+### 🚀 Usage
+
+```bash
+python3 log_analyzer.py <log_file>
+```
+
+#### Example:
+
+```bash
+python3 log_analyzer.py access.log
+```
+
+#### Output:
+
+```
+===============================================================
+[~] Log file:	access.log
+===============================================================
+
+📊 Top 5 IPs:
+192.168.0.101     34 requests
+10.0.0.15         21 requests
+...
+===============================================================
+
+📄 Top 5 Requested URLs:
+/index.html                 18 hits
+/login                     12 hits
+...
+===============================================================
+
+📡 Status Code Summary:
+200: 54
+404: 7
+403: 3
+...
+===============================================================
+```
+
+### ⚙️ How It Works
+
+* Uses a regular expression to extract:
+
+  * IP address
+  * Timestamp
+  * HTTP method
+  * Requested URL
+  * Response status code
+  * Response size
+* Aggregates and ranks:
+
+  * Top 5 IPs by request volume
+  * Top 5 requested URLs
+  * Status code counts
+
+### 📦 Requirements
+
+* Python 3.x
